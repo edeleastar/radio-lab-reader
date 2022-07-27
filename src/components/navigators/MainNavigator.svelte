@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { getContext, onDestroy } from "svelte";
-  import { fly } from "svelte/transition";
   import TitleCard from "../cards/TitleCard.svelte";
-
+  import ClearButton from "./support/ClearButton.svelte";
 </script>
 
   <div class="header-container">
     <div class="navbar">
       <TitleCard />
+      <ClearButton />
     </div>
   </div>

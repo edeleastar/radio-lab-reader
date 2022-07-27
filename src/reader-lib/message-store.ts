@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase/app";
 import {getKeys} from "../environment";
-import {getDatabase, off, onValue, ref} from "firebase/database";
+import {getDatabase, remove, onValue, ref} from "firebase/database";
 
 export type MessageListener = (messages: any) => void;
 
@@ -28,9 +28,15 @@ export class MessageStore {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const db = getDatabase();
-    const statustRef = ref(db, `messages`);
-    onValue(statustRef, (snapshot) => {
+    const messagesRef = ref(db, `messages`);
+    onValue(messagesRef, (snapshot) => {
       that.messageUpdate(snapshot.val());
     });
+  }
+
+  clearAllMessages() : void {
+    const db = getDatabase();
+    const messagesRef = ref(db, `messages`);
+    remove(messagesRef);
   }
 }
