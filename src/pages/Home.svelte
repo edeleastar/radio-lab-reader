@@ -3,8 +3,7 @@
   import { MessageStore } from "../reader-lib/message-store";
   import * as animateScroll from "svelte-scrollto";
   import {getKeys} from "../environment";
-
-  console.log(getKeys());
+  
   const defaultOptions = {
     headers: {
       'Authorization' : `Bearer ${getKeys().facebookToken}`    },
