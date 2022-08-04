@@ -34,7 +34,7 @@
       if (obj.msg?.data?.text) {
         message.textMessage = obj.msg?.data?.text
       }
-      if (obj.msg?.data?.caption) {
+      if (obj.msg?.data?.url) {
         message.imageCaption = obj.msg?.data?.caption
         message.imageUrl = obj.msg?.data?.url
       }
@@ -62,7 +62,9 @@
         <div class="bg-indigo-300 ...">
           <img class="object-cover h-48 w-96" src="{message.imageUrl}">
         </div>
-        <span> {message.imageCaption}</span>
+        {#if message.imageCaption}
+          <span> {message?.imageCaption}</span>
+        {/if}
       {/if}
     </div>
     <div class="flex-none">
