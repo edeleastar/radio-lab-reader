@@ -3,7 +3,7 @@
   import { MessageStore } from "../reader-lib/message-store";
   import * as animateScroll from "svelte-scrollto";
   import {getKeys} from "../environment";
-  
+
   const defaultOptions = {
     headers: {
       'Authorization' : `Bearer ${getKeys().facebookToken}`    },
@@ -34,16 +34,11 @@
       if (obj.msg?.data?.text) {
         message.textMessage = obj.msg?.data?.text
       }
-      if (obj.msg?.data?.mime_type === "image/jpeg") {
-        message.imageId = obj.msg?.data?.id;
-        message.imageCaption = obj.msg?.data?.caption;
-        const endpoint = `${imageEndpoint}/${message.imageId}`
-        const imgData = await fetch(endpoint, defaultOptions);
-        const img = await imgData.json();
-        message.imageUrl = img.url;
+      if (obj.msg?.data?.caption) {
+        message.imageCaption = obj.msg?.data?.caption
+        message.imageUrl = obj.msg?.data?.url
       }
       messages.push(message)
-      // console.log(messages);
     }
     messageList = [...messages];
     animateScroll.scrollTo({ delay: 200, element: "#bottom" });
@@ -63,8 +58,10 @@
       {#if message.textMessage}
       <span> {message.textMessage}</span>
       {/if}
-      {#if message.imageId}
-        <img src="{message.imageUrl}">
+      {#if message.imageUrl}
+        <div class="bg-indigo-300 ...">
+          <img class="object-cover h-48 w-96" src="{message.imageUrl}">
+        </div>
         <span> {message.imageCaption}</span>
       {/if}
     </div>
